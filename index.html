@@ -123,7 +123,7 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
 const CONFIG = {
   marca: "SM Tech",
   whatsapp: "5555991695142",          // seu número com 55 + DDD
-  pixChave: "SUA-CHAVE-PIX-AQUI",     // usado só se não houver link de pagamento
+  pixChave: "a90439a1-905b-46eb-a9fd-cf0182c7ed90",     // chave Pix aleatória (pagamento direto, liberação manual)
   checkoutApi: "/api/checkout",       // checkout automático (Vercel + Mercado Pago); se falhar, usa o link manual
   planos: [
     { id:"basico",   nome:"Básico",   preco:100, destaque:false,
@@ -155,8 +155,10 @@ CONFIG.planos.forEach(p=>{
   d.innerHTML = (p.destaque ? '<span class="tag">Mais escolhido</span>' : '') +
     `<h3>${p.nome}</h3><div class="preco">${brl(p.preco)} <small>único</small></div>
      <ul>${p.itens.map(i=>`<li>${i}</li>`).join("")}</ul>
-     <button class="btn" style="width:100%">Contratar ${p.nome}</button>`;
+     <button class="btn" style="width:100%">Contratar ${p.nome}</button>
+     <button class="btn sec pixdireto" style="width:100%;margin-top:8px">Pagar direto por Pix</button>`;
   d.querySelector("button").onclick = () => comprar(p);
+  d.querySelector(".pixdireto").onclick = () => abrirPix(p);
   lista.appendChild(d);
 });
 
@@ -186,6 +188,17 @@ async function comprar(p){
     pix.textContent = CONFIG.pixChave;
     pix.style.display = "block"; copia.style.display = "block"; pay.style.display = "none";
   }
+  document.getElementById("modal").classList.add("on");
+}
+function abrirPix(p){
+  const msg = `Olá! Paguei o plano ${p.nome} (${brl(p.preco)}) por Pix. Segue o comprovante:`;
+  document.getElementById("mZap").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  document.getElementById("mTitle").textContent = "Pagamento via Pix";
+  document.getElementById("mInfo").textContent = `Plano ${p.nome}: ${brl(p.preco)}. Pague pela chave Pix abaixo e envie o comprovante; liberamos o formulário em seguida.`;
+  const pix = document.getElementById("mPix");
+  pix.textContent = CONFIG.pixChave; pix.style.display = "block";
+  document.getElementById("mCopia").style.display = "block";
+  document.getElementById("mPay").style.display = "none";
   document.getElementById("modal").classList.add("on");
 }
 function fechar(){ document.getElementById("modal").classList.remove("on"); }
