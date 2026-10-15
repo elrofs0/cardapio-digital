@@ -1,5 +1,19 @@
 # Liberação automática — Mercado Pago + Vercel
 
+## Caminho rápido (2 cliques)
+
+1. Pegue seu Access Token de produção em https://www.mercadopago.com.br/developers/panel/app (crie uma aplicação *Checkout Pro* se ainda não tiver). Não cole o token no chat.
+2. Abra o link abaixo, entre com o GitHub, cole o token no campo `MP_ACCESS_TOKEN` e clique em Deploy:
+
+https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Felrofs0%2Fcardapio-digital&env=MP_ACCESS_TOKEN&envDescription=Access%20Token%20de%20producao%20do%20Mercado%20Pago&project-name=sm-tech-atendimento
+
+3. Quando terminar, abra `https://SEU-PROJETO.vercel.app/?teste=1`, contrate o plano Teste (R$ 1) e confira que o formulário abre sozinho depois de pagar.
+4. Me mande o endereço da Vercel que eu troco os links dos anúncios.
+
+O resto deste arquivo detalha o mesmo processo passo a passo.
+
+---
+
 Fluxo: cliente clica em **Contratar** → `/api/checkout` cria o pagamento no Mercado Pago →
 cliente paga (Pix, cartão ou boleto) → Mercado Pago devolve para `/briefing.html?payment_id=...` →
 `/api/verify` confere no Mercado Pago se o pagamento foi **aprovado** → o formulário é liberado sozinho.
