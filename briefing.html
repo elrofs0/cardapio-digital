@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Informações do seu cardápio | SM Tech</title>
+<style>
+:root{--verde:#16a34a;--verde-esc:#0f7a37;--fundo:#f6faf7;--texto:#14211a;--cinza:#5b6b61;--borda:#dbe7de}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--fundo);color:var(--texto);line-height:1.5;padding-bottom:60px}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.topo{background:var(--verde);color:#fff;padding:26px 0;margin-bottom:22px}
+.topo h1{font-size:1.5rem}.topo p{opacity:.92;margin-top:4px}
+fieldset{background:#fff;border:1px solid var(--borda);border-radius:16px;padding:20px;margin-bottom:18px}
+legend{font-weight:800;padding:0 8px;color:var(--verde-esc);font-size:1.05rem}
+label{display:block;font-weight:600;font-size:.92rem;margin:12px 0 4px}
+.dica{font-weight:400;color:var(--cinza);font-size:.82rem}
+input,textarea,select{width:100%;padding:11px 12px;border:1px solid var(--borda);border-radius:10px;font:inherit;background:#fff}
+input:focus,textarea:focus{outline:2px solid var(--verde);border-color:var(--verde)}
+textarea{min-height:76px;resize:vertical}
+.row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.prod{border:1px solid var(--borda);border-radius:12px;padding:14px;margin-top:12px;background:#fbfdfb;position:relative}
+.prod .rm{position:absolute;top:8px;right:10px;background:none;border:0;color:#b42318;font-size:1.2rem;cursor:pointer}
+.prev{width:84px;height:84px;object-fit:cover;border-radius:10px;border:1px solid var(--borda);margin-top:8px;display:none}
+.btn{display:inline-block;background:var(--verde);color:#fff;border:0;border-radius:12px;padding:14px 22px;font-size:1rem;font-weight:700;cursor:pointer}
+.btn.sec{background:#fff;color:var(--verde-esc);border:2px solid var(--verde)}
+.btn.full{width:100%}
+.ok{display:none;background:#e3f6ea;border:1px solid var(--verde);border-radius:16px;padding:22px;margin-top:18px}
+.ok h2{margin-bottom:8px}.ok ol{margin:10px 0 14px 20px}
+.aviso{background:#fff8e1;border:1px solid #f0d98a;border-radius:12px;padding:12px 14px;font-size:.9rem;margin-bottom:18px}
+</style>
+</head>
+<body>
+<div class="topo"><div class="wrap">
+  <h1>✅ Pagamento confirmado!</h1>
+  <p>Preencha abaixo. Em até 24h após recebermos tudo, seu cardápio estará pronto.<span id="planoTxt"></span></p>
+</div></div>
+
+<div class="wrap">
+<form id="f">
+
+<fieldset><legend>1. Sobre o negócio</legend>
+  <label>Nome do negócio *<input name="negocio" required></label>
+  <div class="row">
+    <label>Seu nome *<input name="responsavel" required></label>
+    <label>WhatsApp do negócio *<input name="zap" type="tel" placeholder="(55) 9 9999-9999" required></label>
+  </div>
+  <div class="row">
+    <label>Instagram <span class="dica">(opcional)</span><input name="insta" placeholder="@seunegocio"></label>
+    <label>Horário de funcionamento *<input name="horario" placeholder="Seg a Sáb, 18h às 23h" required></label>
+  </div>
+  <label>Endereço <span class="dica">(ou "somente delivery")</span><input name="endereco"></label>
+  <div class="row">
+    <label>Cor principal <span class="dica">(para o cardápio)</span><input name="cor" type="color" value="#16a34a" style="height:44px;padding:4px"></label>
+    <label>Formas de pagamento<input name="pagamento" placeholder="Pix, cartão, dinheiro"></label>
+  </div>
+  <label>Taxa/área de entrega <span class="dica">(opcional)</span><input name="entrega" placeholder="Ex.: R$ 5 até 3 km, grátis acima de R$ 50"></label>
+</fieldset>
+
+<fieldset><legend>2. Produtos</legend>
+  <p class="dica">Adicione cada item com nome, preço e foto. Pode adicionar quantos quiser.</p>
+  <div id="produtos"></div>
+  <button type="button" class="btn sec" style="margin-top:14px" onclick="addProd()">+ Adicionar produto</button>
+</fieldset>
+
+<fieldset><legend>3. Suas mensagens</legend>
+  <p class="dica">Escreva do seu jeito. Se deixar em branco, nós criamos uma sugestão para você aprovar.</p>
+  <label>Mensagem de saudação <span class="dica">(quando o cliente chama)</span><textarea name="saudacao" placeholder="Olá! Bem-vindo ao ... Veja nosso cardápio: ..."></textarea></label>
+  <label>Mensagem de ausência <span class="dica">(fora do horário)</span><textarea name="ausencia" placeholder="No momento estamos fechados. Voltamos às ..."></textarea></label>
+  <label>Resposta rápida: cardápio<textarea name="rr_cardapio"></textarea></label>
+  <label>Resposta rápida: Pix / pagamento<textarea name="rr_pix"></textarea></label>
+  <label>Resposta rápida: entrega<textarea name="rr_entrega"></textarea></label>
+  <label>Outras mensagens ou observações<textarea name="outras"></textarea></label>
+</fieldset>
+
+<div class="aviso">📸 Suas fotos aparecem aqui só como pré-visualização. Depois de clicar em enviar, você manda as fotos no mesmo WhatsApp (instruções na próxima tela).</div>
+
+<button class="btn full" type="submit">Enviar informações</button>
+</form>
+
+<div class="ok" id="ok">
+  <h2>Quase lá! Faltam 2 passos:</h2>
+  <ol>
+    <li>Clique em <b>Enviar pelo WhatsApp</b> e mande a mensagem que vai abrir.</li>
+    <li>Na mesma conversa, envie as <b>fotos dos produtos</b> (se possível, com o nome de cada item na legenda).</li>
+  </ol>
+  <button class="btn full" id="bZap">Enviar pelo WhatsApp</button>
+  <button class="btn sec full" id="bCopia" style="margin-top:8px">Copiar resumo</button>
+  <p class="dica" style="margin-top:10px">Prazo de 24h começa quando recebermos o resumo e as fotos.</p>
+</div>
+</div>
+
+<script>
+/* ===== CONFIGURAÇÃO ===== */
+const WHATSAPP = "5555900000000";   // mesmo número da landing page
+/* ======================== */
+
+const $ = s => document.querySelector(s);
+const params = new URLSearchParams(location.search);
+const plano = params.get("plano");
+if(plano) $("#planoTxt").textContent = " Plano: " + plano + ".";
+
+let n = 0;
+function addProd(){
+  n++;
+  const d = document.createElement("div");
+  d.className = "prod";
+  d.innerHTML = `<button type="button" class="rm" title="Remover">×</button>
+    <div class="row">
+      <label>Nome do produto<input class="p-nome"></label>
+      <label>Preço (R$)<input class="p-preco" inputmode="decimal" placeholder="0,00"></label>
+    </div>
+    <label>Descrição <span class="dica">(opcional)</span><input class="p-desc" placeholder="Ingredientes, tamanho..."></label>
+    <label>Foto <span class="dica">(pré-visualização)</span><input class="p-foto" type="file" accept="image/*"></label>
+    <img class="prev" alt="">`;
+  d.querySelector(".rm").onclick = () => d.remove();
+  d.querySelector(".p-foto").onchange = e => {
+    const f = e.target.files[0], img = d.querySelector(".prev");
+    if(f){ img.src = URL.createObjectURL(f); img.style.display="block"; d.dataset.foto = f.name; }
+  };
+  $("#produtos").appendChild(d);
+}
+addProd();
+
+function montar(fd){
+  const g = k => (fd.get(k)||"").trim();
+  let t = `*NOVO CARDÁPIO DIGITAL*${plano? " – Plano "+plano:""}\n\n`;
+  t += `*Negócio:* ${g("negocio")}\n*Responsável:* ${g("responsavel")}\n*WhatsApp:* ${g("zap")}\n`;
+  if(g("insta")) t += `*Instagram:* ${g("insta")}\n`;
+  t += `*Horário:* ${g("horario")}\n`;
+  if(g("endereco")) t += `*Endereço:* ${g("endereco")}\n`;
+  if(g("pagamento")) t += `*Pagamento:* ${g("pagamento")}\n`;
+  if(g("entrega")) t += `*Entrega:* ${g("entrega")}\n`;
+  t += `*Cor:* ${g("cor")}\n\n*PRODUTOS*\n`;
+  let i = 0;
+  document.querySelectorAll(".prod").forEach(p=>{
+    const nome = p.querySelector(".p-nome").value.trim();
+    if(!nome) return;
+    i++;
+    const preco = p.querySelector(".p-preco").value.trim();
+    const desc = p.querySelector(".p-desc").value.trim();
+    t += `${i}. ${nome} – R$ ${preco||"?"}${desc? " ("+desc+")":""}${p.dataset.foto? " [foto: "+p.dataset.foto+"]":""}\n`;
+  });
+  if(!i) t += "(nenhum informado)\n";
+  const msgs = [["saudacao","Saudação"],["ausencia","Ausência"],["rr_cardapio","Resp. rápida – cardápio"],["rr_pix","Resp. rápida – Pix"],["rr_entrega","Resp. rápida – entrega"],["outras","Observações"]];
+  t += `\n*MENSAGENS*\n`;
+  msgs.forEach(([k,l])=>{ if(g(k)) t += `• ${l}: ${g(k)}\n`; });
+  return t;
+}
+
+$("#f").addEventListener("submit", e=>{
+  e.preventDefault();
+  const texto = montar(new FormData(e.target));
+  $("#bZap").onclick = () => window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(texto)}`,"_blank");
+  $("#bCopia").onclick = () => navigator.clipboard.writeText(texto).then(()=>alert("Resumo copiado!"));
+  $("#f").style.display = "none";
+  $("#ok").style.display = "block";
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+</script>
+</body>
+</html>

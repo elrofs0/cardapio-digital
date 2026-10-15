@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cardápio Digital + Catálogo WhatsApp | SM Tech</title>
+<meta name="description" content="Seu cardápio digital, catálogo e respostas automáticas no WhatsApp Business prontos em 24 horas.">
+<style>
+:root{--verde:#16a34a;--verde-esc:#0f7a37;--fundo:#f6faf7;--texto:#14211a;--cinza:#5b6b61;--borda:#dbe7de;--card:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--fundo);color:var(--texto);line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding:0 18px}
+header{padding:16px 0}
+header .wrap{display:flex;justify-content:space-between;align-items:center}
+.logo{font-weight:800;font-size:1.15rem;color:var(--verde-esc)}
+.btn{display:inline-block;background:var(--verde);color:#fff;border:0;border-radius:12px;padding:14px 24px;font-size:1rem;font-weight:700;cursor:pointer;text-decoration:none;transition:.15s}
+.btn:hover{background:var(--verde-esc);transform:translateY(-1px)}
+.btn.sec{background:#fff;color:var(--verde-esc);border:2px solid var(--verde)}
+.hero{padding:40px 0 30px;text-align:center}
+.hero h1{font-size:clamp(1.9rem,5vw,3rem);line-height:1.15;max-width:760px;margin:0 auto 14px}
+.hero h1 span{color:var(--verde)}
+.hero p{color:var(--cinza);max-width:600px;margin:0 auto 24px;font-size:1.1rem}
+.selo{display:inline-block;background:#e3f6ea;color:var(--verde-esc);padding:6px 14px;border-radius:99px;font-weight:700;font-size:.85rem;margin-bottom:16px}
+section{padding:36px 0}
+h2{font-size:1.6rem;margin-bottom:6px;text-align:center}
+.sub{color:var(--cinza);text-align:center;margin-bottom:24px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--borda);border-radius:16px;padding:22px}
+.card .n{width:38px;height:38px;border-radius:50%;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:10px}
+.card h3{margin-bottom:6px;font-size:1.05rem}
+.card p{color:var(--cinza);font-size:.95rem}
+.inclui li{list-style:none;padding:8px 0 8px 30px;position:relative;border-bottom:1px solid var(--borda)}
+.inclui li::before{content:"✓";position:absolute;left:0;color:var(--verde);font-weight:900}
+.inclui{max-width:620px;margin:0 auto;background:#fff;border:1px solid var(--borda);border-radius:16px;padding:10px 24px}
+.planos{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));max-width:720px;margin:0 auto}
+.plano{background:#fff;border:2px solid var(--borda);border-radius:18px;padding:26px;text-align:center;position:relative}
+.plano.dest{border-color:var(--verde)}
+.plano .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--verde);color:#fff;padding:3px 14px;border-radius:99px;font-size:.78rem;font-weight:700}
+.plano h3{font-size:1.2rem}
+.preco{font-size:2.4rem;font-weight:800;margin:8px 0}
+.preco small{font-size:1rem;color:var(--cinza);font-weight:500}
+.plano ul{list-style:none;text-align:left;margin:14px 0 20px;font-size:.95rem}
+.plano li{padding:5px 0 5px 24px;position:relative}
+.plano li::before{content:"✓";position:absolute;left:0;color:var(--verde);font-weight:900}
+details{background:#fff;border:1px solid var(--borda);border-radius:12px;padding:14px 18px;margin-bottom:10px;max-width:700px;margin-left:auto;margin-right:auto}
+summary{font-weight:700;cursor:pointer}
+details p{margin-top:8px;color:var(--cinza)}
+footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:18px;z-index:10}
+.modal.on{display:flex}
+.modal .box{background:#fff;border-radius:18px;padding:26px;max-width:440px;width:100%}
+.modal h3{margin-bottom:8px}
+.pix{background:#f0f7f2;border:1px dashed var(--verde);border-radius:12px;padding:14px;margin:14px 0;word-break:break-all;font-family:monospace;font-size:.95rem}
+.modal .btn{width:100%;margin-top:8px;text-align:center}
+.x{float:right;background:none;border:0;font-size:1.5rem;cursor:pointer}
+</style>
+</head>
+<body>
+
+<header><div class="wrap"><div class="logo" id="marca">SM Tech</div><a class="btn sec" href="#planos">Ver planos</a></div></header>
+
+<main>
+<div class="wrap hero">
+  <div class="selo">⏱ Pronto em até 24 horas</div>
+  <h1>Seu <span>cardápio digital</span> e catálogo no WhatsApp, sem dor de cabeça</h1>
+  <p>Pare de repetir preço e cardápio toda hora. A gente monta tudo pra você receber pedidos organizados.</p>
+  <a class="btn" href="#planos">Quero o meu agora</a>
+</div>
+
+<section><div class="wrap">
+  <h2>Como funciona</h2>
+  <p class="sub">Simples: você paga, manda as informações e a gente entrega.</p>
+  <div class="grid">
+    <div class="card"><div class="n">1</div><h3>Escolha e pague</h3><p>Selecione o plano e pague por Pix ou cartão.</p></div>
+    <div class="card"><div class="n">2</div><h3>Envie suas informações</h3><p>Depois do pagamento você libera o formulário: fotos, preços e mensagens do seu jeito.</p></div>
+    <div class="card"><div class="n">3</div><h3>Receba pronto</h3><p>Em até 24h após recebermos tudo, entregamos seu cardápio, catálogo e respostas configurados.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>O que você recebe</h2>
+  <p class="sub">Tudo configurado, é só começar a vender.</p>
+  <ul class="inclui">
+    <li>Perfil do WhatsApp Business configurado</li>
+    <li>Catálogo com seus produtos, fotos e preços</li>
+    <li>Mensagem de saudação e de ausência</li>
+    <li>Respostas rápidas (cardápio, Pix, entrega...)</li>
+    <li>Cardápio digital com link e botão "Pedir no WhatsApp"</li>
+    <li>QR Code pronto para imprimir (plano completo)</li>
+  </ul>
+</div></section>
+
+<section id="planos"><div class="wrap">
+  <h2>Escolha seu plano</h2>
+  <p class="sub">Pagamento único. Sem mensalidade obrigatória.</p>
+  <div class="planos" id="listaPlanos"></div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Dúvidas frequentes</h2><p class="sub"></p>
+  <details><summary>Em quanto tempo fica pronto?</summary><p>Em até 24 horas a partir do momento em que recebemos todas as informações e fotos.</p></details>
+  <details><summary>O que preciso enviar?</summary><p>Fotos dos produtos, nomes, preços, horário, endereço e as mensagens que quer usar. Se não souber o que escrever, a gente sugere.</p></details>
+  <details><summary>Preciso entender de tecnologia?</summary><p>Não. Você só preenche o formulário. Nós fazemos o resto.</p></details>
+  <details><summary>Posso alterar preços depois?</summary><p>Sim. Oferecemos manutenção mensal opcional para atualizar itens e preços sempre que precisar.</p></details>
+</div></section>
+</main>
+
+<footer>© <span id="ano"></span> <span id="marca2"></span> · Atendimento via WhatsApp</footer>
+
+<div class="modal" id="modal"><div class="box">
+  <button class="x" onclick="fechar()" aria-label="Fechar">×</button>
+  <h3>Pagamento via Pix</h3>
+  <p id="mInfo"></p>
+  <div class="pix" id="mPix"></div>
+  <button class="btn sec" onclick="copiarPix()">Copiar chave Pix</button>
+  <a class="btn" id="mZap" target="_blank" rel="noopener">Já paguei, enviar comprovante</a>
+  <p style="font-size:.85rem;color:#5b6b61;margin-top:12px">Assim que confirmarmos, enviamos o link do formulário para você.</p>
+</div></div>
+
+<script>
+/* ===== CONFIGURAÇÃO: edite só aqui ===== */
+const CONFIG = {
+  marca: "SM Tech",
+  whatsapp: "5555900000000",          // seu número com 55 + DDD
+  pixChave: "SUA-CHAVE-PIX-AQUI",     // usado quando o plano não tem link de pagamento
+  planos: [
+    { id:"basico",   nome:"Básico",   preco:100, destaque:false,
+      itens:["Perfil WhatsApp Business","Catálogo de produtos","Saudação, ausência e respostas rápidas"],
+      linkPagamento:"" },             // cole o link do Mercado Pago/outro aqui (opcional)
+    { id:"completo", nome:"Completo", preco:220, destaque:true,
+      itens:["Tudo do plano Básico","Cardápio digital com link","QR Code para mesa e balcão","Mensagem pronta de pedido"],
+      linkPagamento:"" }
+  ]
+};
+/* ======================================= */
+
+const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0});
+document.getElementById("marca").textContent = CONFIG.marca;
+document.getElementById("marca2").textContent = CONFIG.marca;
+document.getElementById("ano").textContent = new Date().getFullYear();
+
+const lista = document.getElementById("listaPlanos");
+CONFIG.planos.forEach(p=>{
+  const d = document.createElement("div");
+  d.className = "plano" + (p.destaque ? " dest" : "");
+  d.innerHTML = (p.destaque ? '<span class="tag">Mais escolhido</span>' : '') +
+    `<h3>${p.nome}</h3><div class="preco">${brl(p.preco)} <small>único</small></div>
+     <ul>${p.itens.map(i=>`<li>${i}</li>`).join("")}</ul>
+     <button class="btn" style="width:100%">Contratar ${p.nome}</button>`;
+  d.querySelector("button").onclick = () => comprar(p);
+  lista.appendChild(d);
+});
+
+function comprar(p){
+  if(p.linkPagamento){ location.href = p.linkPagamento; return; }
+  document.getElementById("mInfo").textContent = `Plano ${p.nome}: ${brl(p.preco)}. Pague pela chave abaixo:`;
+  document.getElementById("mPix").textContent = CONFIG.pixChave;
+  const msg = `Olá! Contratei o plano ${p.nome} (${brl(p.preco)}) do cardápio digital. Segue o comprovante do Pix:`;
+  document.getElementById("mZap").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  document.getElementById("modal").classList.add("on");
+}
+function fechar(){ document.getElementById("modal").classList.remove("on"); }
+function copiarPix(){ navigator.clipboard.writeText(CONFIG.pixChave).then(()=>alert("Chave Pix copiada!")); }
+document.getElementById("modal").addEventListener("click",e=>{ if(e.target.id==="modal") fechar(); });
+</script>
+</body>
+</html>
