@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Informações do seu cardápio | SM Tech</title>
+<title>Informações do seu atendimento | SM Tech</title>
 <style>
 :root{--verde:#16a34a;--verde-esc:#0f7a37;--fundo:#f6faf7;--texto:#14211a;--cinza:#5b6b61;--borda:#dbe7de}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -35,7 +35,7 @@ textarea{min-height:76px;resize:vertical}
 <body>
 <div class="topo" id="topo" style="display:none"><div class="wrap">
   <h1>✅ Pagamento confirmado!</h1>
-  <p>Preencha abaixo. Em até 24h após recebermos tudo, seu cardápio estará pronto.<span id="planoTxt"></span></p>
+  <p>Preencha abaixo. Em até 24h após recebermos tudo, seu atendimento automático estará pronto.<span id="planoTxt"></span></p>
 </div></div>
 
 <div class="wrap">
@@ -57,25 +57,25 @@ textarea{min-height:76px;resize:vertical}
   </div>
   <label>Endereço <span class="dica">(ou "somente delivery")</span><input name="endereco"></label>
   <div class="row">
-    <label>Cor principal <span class="dica">(para o cardápio)</span><input name="cor" type="color" value="#16a34a" style="height:44px;padding:4px"></label>
+    <label>Cor principal <span class="dica">(para a página)</span><input name="cor" type="color" value="#16a34a" style="height:44px;padding:4px"></label>
     <label>Formas de pagamento<input name="pagamento" placeholder="Pix, cartão, dinheiro"></label>
   </div>
   <label>Taxa/área de entrega <span class="dica">(opcional)</span><input name="entrega" placeholder="Ex.: R$ 5 até 3 km, grátis acima de R$ 50"></label>
 </fieldset>
 
-<fieldset><legend>2. Produtos</legend>
-  <p class="dica">Adicione cada item com nome, preço e foto. Pode adicionar quantos quiser.</p>
+<fieldset><legend>2. Serviços ou produtos</legend>
+  <p class="dica">Adicione cada serviço ou produto com nome, preço e foto (se tiver). Pode adicionar quantos quiser.</p>
   <div id="produtos"></div>
-  <button type="button" class="btn sec" style="margin-top:14px" onclick="addProd()">+ Adicionar produto</button>
+  <button type="button" class="btn sec" style="margin-top:14px" onclick="addProd()">+ Adicionar item</button>
 </fieldset>
 
 <fieldset><legend>3. Suas mensagens</legend>
   <p class="dica">Escreva do seu jeito. Se deixar em branco, nós criamos uma sugestão para você aprovar.</p>
   <label>Mensagem de saudação <span class="dica">(quando o cliente chama)</span><textarea name="saudacao" placeholder="Olá! Bem-vindo ao ... Veja nosso cardápio: ..."></textarea></label>
   <label>Mensagem de ausência <span class="dica">(fora do horário)</span><textarea name="ausencia" placeholder="No momento estamos fechados. Voltamos às ..."></textarea></label>
-  <label>Resposta rápida: cardápio<textarea name="rr_cardapio"></textarea></label>
+  <label>Resposta rápida: preços / cardápio<textarea name="rr_cardapio"></textarea></label>
   <label>Resposta rápida: Pix / pagamento<textarea name="rr_pix"></textarea></label>
-  <label>Resposta rápida: entrega<textarea name="rr_entrega"></textarea></label>
+  <label>Resposta rápida: entrega ou agendamento<textarea name="rr_entrega"></textarea></label>
   <label>Outras mensagens ou observações<textarea name="outras"></textarea></label>
 </fieldset>
 
@@ -88,7 +88,7 @@ textarea{min-height:76px;resize:vertical}
   <h2>Quase lá! Faltam 2 passos:</h2>
   <ol>
     <li>Clique em <b>Enviar pelo WhatsApp</b> e mande a mensagem que vai abrir.</li>
-    <li>Na mesma conversa, envie as <b>fotos dos produtos</b> (se possível, com o nome de cada item na legenda).</li>
+    <li>Na mesma conversa, envie as <b>fotos</b> (se possível, com o nome de cada item na legenda).</li>
   </ol>
   <button class="btn full" id="bZap">Enviar pelo WhatsApp</button>
   <button class="btn sec full" id="bCopia" style="margin-top:8px">Copiar resumo</button>
@@ -131,7 +131,7 @@ function addProd(){
   d.className = "prod";
   d.innerHTML = `<button type="button" class="rm" title="Remover">×</button>
     <div class="row">
-      <label>Nome do produto<input class="p-nome"></label>
+      <label>Nome do serviço ou produto<input class="p-nome"></label>
       <label>Preço (R$)<input class="p-preco" inputmode="decimal" placeholder="0,00"></label>
     </div>
     <label>Descrição <span class="dica">(opcional)</span><input class="p-desc" placeholder="Ingredientes, tamanho..."></label>
@@ -148,14 +148,14 @@ addProd();
 
 function montar(fd){
   const g = k => (fd.get(k)||"").trim();
-  let t = `*NOVO CARDÁPIO DIGITAL*${plano? " – Plano "+plano:""}\n\n`;
+  let t = `*NOVO ATENDIMENTO AUTOMÁTICO*${plano? " – Plano "+plano:""}\n\n`;
   t += `*Negócio:* ${g("negocio")}\n*Responsável:* ${g("responsavel")}\n*WhatsApp:* ${g("zap")}\n`;
   if(g("insta")) t += `*Instagram:* ${g("insta")}\n`;
   t += `*Horário:* ${g("horario")}\n`;
   if(g("endereco")) t += `*Endereço:* ${g("endereco")}\n`;
   if(g("pagamento")) t += `*Pagamento:* ${g("pagamento")}\n`;
   if(g("entrega")) t += `*Entrega:* ${g("entrega")}\n`;
-  t += `*Cor:* ${g("cor")}\n\n*PRODUTOS*\n`;
+  t += `*Cor:* ${g("cor")}\n\n*SERVIÇOS / PRODUTOS*\n`;
   let i = 0;
   document.querySelectorAll(".prod").forEach(p=>{
     const nome = p.querySelector(".p-nome").value.trim();
@@ -166,7 +166,7 @@ function montar(fd){
     t += `${i}. ${nome} – R$ ${preco||"?"}${desc? " ("+desc+")":""}${p.dataset.foto? " [foto: "+p.dataset.foto+"]":""}\n`;
   });
   if(!i) t += "(nenhum informado)\n";
-  const msgs = [["saudacao","Saudação"],["ausencia","Ausência"],["rr_cardapio","Resp. rápida – cardápio"],["rr_pix","Resp. rápida – Pix"],["rr_entrega","Resp. rápida – entrega"],["outras","Observações"]];
+  const msgs = [["saudacao","Saudação"],["ausencia","Ausência"],["rr_cardapio","Resp. rápida – preços/cardápio"],["rr_pix","Resp. rápida – Pix"],["rr_entrega","Resp. rápida – entrega/agendamento"],["outras","Observações"]];
   t += `\n*MENSAGENS*\n`;
   msgs.forEach(([k,l])=>{ if(g(k)) t += `• ${l}: ${g(k)}\n`; });
   return t;

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cardápio Digital + Catálogo WhatsApp | SM Tech</title>
-<meta name="description" content="Seu cardápio digital, catálogo e respostas automáticas no WhatsApp Business prontos em 24 horas.">
+<title>Atendimento Automático no WhatsApp | SM Tech</title>
+<meta name="description" content="Atendimento automático no WhatsApp para clínicas, salões, revendas de gás e delivery: respostas prontas, catálogo e link de agendamento ou pedido em 24 horas.">
 <style>
 :root{--verde:#16a34a;--verde-esc:#0f7a37;--fundo:#f6faf7;--texto:#14211a;--cinza:#5b6b61;--borda:#dbe7de;--card:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
@@ -62,8 +62,8 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
 <main>
 <div class="wrap hero">
   <div class="selo">⏱ Pronto em até 24 horas</div>
-  <h1>Seu <span>cardápio digital</span> e catálogo no WhatsApp, sem dor de cabeça</h1>
-  <p>Pare de repetir preço e cardápio toda hora. A gente monta tudo pra você receber pedidos organizados.</p>
+  <h1>Seu <span>atendimento no WhatsApp</span> no automático, sem perder cliente</h1>
+  <p>Para clínicas, salões, revendas de gás e delivery: respostas automáticas, catálogo e link de agendamento ou pedido, tudo configurado por nós.</p>
   <a class="btn" href="#planos">Quero o meu agora</a>
 </div>
 
@@ -71,9 +71,9 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
   <h2>Como funciona</h2>
   <p class="sub">Simples: você paga, manda as informações e a gente entrega.</p>
   <div class="grid">
-    <div class="card"><div class="n">1</div><h3>Escolha e pague</h3><p>Selecione o plano e pague por Pix ou cartão.</p></div>
-    <div class="card"><div class="n">2</div><h3>Envie suas informações</h3><p>Depois do pagamento você libera o formulário: fotos, preços e mensagens do seu jeito.</p></div>
-    <div class="card"><div class="n">3</div><h3>Receba pronto</h3><p>Em até 24h após recebermos tudo, entregamos seu cardápio, catálogo e respostas configurados.</p></div>
+    <div class="card"><div class="n">1</div><h3>Escolha e pague</h3><p>Selecione o plano e pague por Pix, cartão ou boleto.</p></div>
+    <div class="card"><div class="n">2</div><h3>Envie suas informações</h3><p>Depois do pagamento você libera o formulário: serviços ou produtos, preços e mensagens do seu jeito.</p></div>
+    <div class="card"><div class="n">3</div><h3>Receba pronto</h3><p>Em até 24h após recebermos tudo, entregamos seu atendimento automático configurado.</p></div>
   </div>
 </div></section>
 
@@ -82,10 +82,10 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
   <p class="sub">Tudo configurado, é só começar a vender.</p>
   <ul class="inclui">
     <li>Perfil do WhatsApp Business configurado</li>
-    <li>Catálogo com seus produtos, fotos e preços</li>
-    <li>Mensagem de saudação e de ausência</li>
-    <li>Respostas rápidas (cardápio, Pix, entrega...)</li>
-    <li>Cardápio digital com link e botão "Pedir no WhatsApp"</li>
+    <li>Catálogo com seus serviços ou produtos, fotos e preços</li>
+    <li>Mensagem de saudação e de ausência (fora do horário)</li>
+    <li>Respostas rápidas (horários, preços, endereço, Pix, entrega...)</li>
+    <li>Página com link e botão "Agendar ou pedir pelo WhatsApp"</li>
     <li>QR Code pronto para imprimir (plano completo)</li>
   </ul>
 </div></section>
@@ -99,9 +99,9 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
 <section><div class="wrap">
   <h2>Dúvidas frequentes</h2><p class="sub"></p>
   <details><summary>Em quanto tempo fica pronto?</summary><p>Em até 24 horas a partir do momento em que recebemos todas as informações e fotos.</p></details>
-  <details><summary>O que preciso enviar?</summary><p>Fotos dos produtos, nomes, preços, horário, endereço e as mensagens que quer usar. Se não souber o que escrever, a gente sugere.</p></details>
+  <details><summary>O que preciso enviar?</summary><p>Serviços ou produtos com preços, fotos (se tiver), horário, endereço e as mensagens que quer usar. Se não souber o que escrever, a gente sugere.</p></details>
   <details><summary>Preciso entender de tecnologia?</summary><p>Não. Você só preenche o formulário. Nós fazemos o resto.</p></details>
-  <details><summary>Posso alterar preços depois?</summary><p>Sim. Oferecemos manutenção mensal opcional para atualizar itens e preços sempre que precisar.</p></details>
+  <details><summary>Posso alterar preços depois?</summary><p>Sim. Oferecemos manutenção mensal opcional para atualizar itens, preços e mensagens sempre que precisar.</p></details>
 </div></section>
 </main>
 
@@ -127,10 +127,10 @@ const CONFIG = {
   checkoutApi: "/api/checkout",       // checkout automático (Vercel + Mercado Pago); se falhar, usa o link manual
   planos: [
     { id:"basico",   nome:"Básico",   preco:100, destaque:false,
-      itens:["Perfil WhatsApp Business","Catálogo de produtos","Saudação, ausência e respostas rápidas"],
+      itens:["Perfil WhatsApp Business","Catálogo de serviços ou produtos","Saudação, ausência e respostas rápidas"],
       linkPagamento:"https://mpago.la/1zmBMca" },   // Mercado Pago R$ 100
     { id:"completo", nome:"Completo", preco:220, destaque:true,
-      itens:["Tudo do plano Básico","Cardápio digital com link","QR Code para mesa e balcão","Mensagem pronta de pedido"],
+      itens:["Tudo do plano Básico","Página com link e botão de WhatsApp","QR Code para balcão e recepção","Mensagem pronta de pedido ou agendamento"],
       linkPagamento:"https://mpago.la/2NudFmN" }
   ]
 };
