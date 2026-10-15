@@ -109,12 +109,13 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
 
 <div class="modal" id="modal"><div class="box">
   <button class="x" onclick="fechar()" aria-label="Fechar">×</button>
-  <h3>Pagamento via Pix</h3>
+  <h3 id="mTitle">Pagamento</h3>
   <p id="mInfo"></p>
-  <div class="pix" id="mPix"></div>
-  <button class="btn sec" onclick="copiarPix()">Copiar chave Pix</button>
+  <div class="pix" id="mPix" style="display:none"></div>
+  <button class="btn sec" id="mCopia" style="display:none" onclick="copiarPix()">Copiar chave Pix</button>
+  <a class="btn sec" id="mPay" target="_blank" rel="noopener" style="display:none">Abrir pagamento novamente</a>
   <a class="btn" id="mZap" target="_blank" rel="noopener">Já paguei, enviar comprovante</a>
-  <p style="font-size:.85rem;color:#5b6b61;margin-top:12px">Assim que confirmarmos, enviamos o link do formulário para você.</p>
+  <p style="font-size:.85rem;color:#5b6b61;margin-top:12px">Assim que confirmarmos o pagamento, enviamos o link do formulário para você.</p>
 </div></div>
 
 <script>
@@ -126,10 +127,10 @@ const CONFIG = {
   planos: [
     { id:"basico",   nome:"Básico",   preco:100, destaque:false,
       itens:["Perfil WhatsApp Business","Catálogo de produtos","Saudação, ausência e respostas rápidas"],
-      linkPagamento:"" },             // cole o link do Mercado Pago/outro aqui (opcional)
+      linkPagamento:"https://mpago.la/1zmBMca" },   // Mercado Pago R$ 100
     { id:"completo", nome:"Completo", preco:220, destaque:true,
       itens:["Tudo do plano Básico","Cardápio digital com link","QR Code para mesa e balcão","Mensagem pronta de pedido"],
-      linkPagamento:"" }
+      linkPagamento:"https://mpago.la/2NudFmN" }
   ]
 };
 /* ======================================= */
@@ -152,11 +153,21 @@ CONFIG.planos.forEach(p=>{
 });
 
 function comprar(p){
-  if(p.linkPagamento){ location.href = p.linkPagamento; return; }
-  document.getElementById("mInfo").textContent = `Plano ${p.nome}: ${brl(p.preco)}. Pague pela chave abaixo:`;
-  document.getElementById("mPix").textContent = CONFIG.pixChave;
-  const msg = `Olá! Contratei o plano ${p.nome} (${brl(p.preco)}) do cardápio digital. Segue o comprovante do Pix:`;
+  const msg = `Olá! Contratei o plano ${p.nome} (${brl(p.preco)}) do cardápio digital. Segue o comprovante:`;
   document.getElementById("mZap").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
+  const pix = document.getElementById("mPix"), copia = document.getElementById("mCopia"), pay = document.getElementById("mPay");
+  if(p.linkPagamento){
+    document.getElementById("mTitle").textContent = "Pagamento do plano " + p.nome;
+    document.getElementById("mInfo").textContent = `Abrimos o pagamento seguro (Pix, cartão ou boleto) em outra aba: ${brl(p.preco)}. Depois de pagar, volte aqui e envie o comprovante para liberarmos o seu formulário.`;
+    pix.style.display = copia.style.display = "none";
+    pay.href = p.linkPagamento; pay.style.display = "block";
+    window.open(p.linkPagamento, "_blank", "noopener");
+  } else {
+    document.getElementById("mTitle").textContent = "Pagamento via Pix";
+    document.getElementById("mInfo").textContent = `Plano ${p.nome}: ${brl(p.preco)}. Pague pela chave abaixo:`;
+    pix.textContent = CONFIG.pixChave;
+    pix.style.display = "block"; copia.style.display = "block"; pay.style.display = "none";
+  }
   document.getElementById("modal").classList.add("on");
 }
 function fechar(){ document.getElementById("modal").classList.remove("on"); }
