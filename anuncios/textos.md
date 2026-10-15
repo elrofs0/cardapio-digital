@@ -1,6 +1,6 @@
 # Textos dos anúncios (grupos do Facebook, Marketplace e Página)
 
-Link da landing: https://elrofs0.github.io/cardapio-digital/ (trocar pelo endereço da Vercel quando estiver no ar)
+Link da landing: https://sm-tech-atendimento.vercel.app/
 WhatsApp: (55) 99169-5142 · https://wa.me/5555991695142
 
 Regras de postagem: um texto por grupo, com intervalo entre as postagens, e respeitar as regras de cada grupo.
