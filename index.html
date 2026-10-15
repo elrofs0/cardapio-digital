@@ -123,7 +123,8 @@ footer{text-align:center;color:var(--cinza);padding:30px 0 50px;font-size:.9rem}
 const CONFIG = {
   marca: "SM Tech",
   whatsapp: "5555991695142",          // seu número com 55 + DDD
-  pixChave: "SUA-CHAVE-PIX-AQUI",     // usado quando o plano não tem link de pagamento
+  pixChave: "SUA-CHAVE-PIX-AQUI",     // usado só se não houver link de pagamento
+  checkoutApi: "/api/checkout",       // checkout automático (Vercel + Mercado Pago); se falhar, usa o link manual
   planos: [
     { id:"basico",   nome:"Básico",   preco:100, destaque:false,
       itens:["Perfil WhatsApp Business","Catálogo de produtos","Saudação, ausência e respostas rápidas"],
@@ -134,6 +135,13 @@ const CONFIG = {
   ]
 };
 /* ======================================= */
+
+// Plano de teste de R$ 1: só aparece em .../?teste=1
+if (new URLSearchParams(location.search).get("teste") === "1") {
+  CONFIG.planos.push({ id:"teste", nome:"Teste", preco:1, destaque:false,
+    itens:["Teste do pagamento e da liberação automática"],
+    linkPagamento:"https://mpago.la/2utbZHQ" });
+}
 
 const brl = v => v.toLocaleString("pt-BR",{style:"currency",currency:"BRL",minimumFractionDigits:0});
 document.getElementById("marca").textContent = CONFIG.marca;
@@ -152,7 +160,17 @@ CONFIG.planos.forEach(p=>{
   lista.appendChild(d);
 });
 
-function comprar(p){
+async function comprar(p){
+  if (CONFIG.checkoutApi) {
+    const btn = document.activeElement;
+    try {
+      if (btn && btn.tagName === "BUTTON") { btn.disabled = true; btn.textContent = "Abrindo pagamento..."; }
+      const r = await fetch(CONFIG.checkoutApi, { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ plano: p.id }) });
+      const d = await r.json();
+      if (d && d.url) { location.href = d.url; return; }
+    } catch (e) { /* cai no fluxo manual abaixo */ }
+    if (btn && btn.tagName === "BUTTON") { btn.disabled = false; btn.textContent = "Contratar " + p.nome; }
+  }
   const msg = `Olá! Contratei o plano ${p.nome} (${brl(p.preco)}) do cardápio digital. Segue o comprovante:`;
   document.getElementById("mZap").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(msg)}`;
   const pix = document.getElementById("mPix"), copia = document.getElementById("mCopia"), pay = document.getElementById("mPay");

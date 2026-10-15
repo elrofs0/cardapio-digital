@@ -33,13 +33,17 @@ textarea{min-height:76px;resize:vertical}
 </style>
 </head>
 <body>
-<div class="topo"><div class="wrap">
+<div class="topo" id="topo" style="display:none"><div class="wrap">
   <h1>✅ Pagamento confirmado!</h1>
   <p>Preencha abaixo. Em até 24h após recebermos tudo, seu cardápio estará pronto.<span id="planoTxt"></span></p>
 </div></div>
 
 <div class="wrap">
-<form id="f">
+<div class="ok" id="trava" style="display:block;margin-top:40px">
+  <h2>Verificando seu pagamento...</h2>
+  <p>Só um instante.</p>
+</div>
+<form id="f" style="display:none">
 
 <fieldset><legend>1. Sobre o negócio</legend>
   <label>Nome do negócio *<input name="negocio" required></label>
@@ -99,8 +103,26 @@ const WHATSAPP = "5555991695142";   // mesmo número da landing page
 
 const $ = s => document.querySelector(s);
 const params = new URLSearchParams(location.search);
-const plano = params.get("plano");
-if(plano) $("#planoTxt").textContent = " Plano: " + plano + ".";
+let plano = "";
+const NOMES = { basico:"Básico", completo:"Completo", teste:"Teste" };
+
+(async () => {
+  const pid = params.get("payment_id") || params.get("collection_id");
+  const trava = $("#trava");
+  try {
+    if (!pid) throw new Error("sem pagamento");
+    const r = await fetch("/api/verify?payment_id=" + encodeURIComponent(pid), { cache:"no-store" });
+    const d = await r.json();
+    if (!d.ok) throw new Error("não aprovado");
+    plano = NOMES[d.plano] || d.plano;
+    $("#planoTxt").textContent = " Plano: " + plano + ".";
+    trava.style.display = "none";
+    $("#topo").style.display = "block";
+    $("#f").style.display = "block";
+  } catch (e) {
+    trava.innerHTML = '<h2>Pagamento não identificado</h2><p>Este formulário é liberado automaticamente depois do pagamento aprovado. Se você já pagou, aguarde alguns minutos e recarregue a página, ou fale com a gente pelo WhatsApp.</p><p style="margin-top:12px"><a class="btn" href="./#planos" style="text-decoration:none">Ver planos</a></p>';
+  }
+})();
 
 let n = 0;
 function addProd(){
